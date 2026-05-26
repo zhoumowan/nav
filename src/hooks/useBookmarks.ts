@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-const BOOKMARKS_KEY = "dev-os-bookmarks";
+const BOOKMARKS_KEY = "nav-bookmarks";
+const LEGACY_BOOKMARKS_KEY = "dev-os-bookmarks";
 
 export function useBookmarks() {
   const [bookmarks, setBookmarks] = useState<Set<string>>(new Set());
@@ -10,9 +11,10 @@ export function useBookmarks() {
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(BOOKMARKS_KEY);
+      const stored = localStorage.getItem(BOOKMARKS_KEY) || localStorage.getItem(LEGACY_BOOKMARKS_KEY);
       if (stored) {
         setBookmarks(new Set(JSON.parse(stored)));
+        localStorage.setItem(BOOKMARKS_KEY, stored);
       }
     } catch {
       // ignore

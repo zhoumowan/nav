@@ -1,10 +1,10 @@
-# DevOS — Developer Workspace
+# Nav — Developer Workspace
 
 > The operating system for modern developers. Curated tools, resources, and inspiration for the AI era.
 
 ## Overview
 
-DevOS is a futuristic developer navigation station built with Astro, React, TypeScript, and TailwindCSS. It features a premium design inspired by Linear, Raycast, Vercel, and Apple Developer aesthetics.
+Nav is a futuristic developer navigation station built with Astro, React, TypeScript, and TailwindCSS. It features a premium design inspired by Linear, Raycast, Vercel, and Apple Developer aesthetics.
 
 ## Features
 
@@ -32,7 +32,7 @@ DevOS is a futuristic developer navigation station built with Astro, React, Type
 ## Project Structure
 
 ```
-dev-os/
+nav/
 ├── astro.config.mjs          # Astro configuration
 ├── tailwind.config.ts        # Tailwind CSS configuration
 ├── tsconfig.json             # TypeScript configuration

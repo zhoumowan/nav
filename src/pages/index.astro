@@ -15,7 +15,7 @@ import { sites } from "@/data/sites";
 ---
 
 <Layout
-  title="DevOS — Build Your Digital Universe"
+  title="Nav — Build Your Digital Universe"
   description="The operating system for modern developers. Curated tools, resources, and inspiration for the AI era."
 >
   <PageLoader client:load />
@@ -54,9 +54,9 @@ import { sites } from "@/data/sites";
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="flex items-center gap-2">
           <div class="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center">
-            <span class="text-background font-bold text-sm">D</span>
+            <span class="text-background font-bold text-sm">N</span>
           </div>
-          <span class="font-semibold text-foreground">DevOS</span>
+          <span class="font-semibold text-foreground">Nav</span>
         </div>
         <p class="text-sm text-muted-foreground">
           Built for developers, by developers. Open source on GitHub.
@@ -80,7 +80,7 @@ import { sites } from "@/data/sites";
   document.addEventListener("keydown", (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === "k") {
       e.preventDefault();
-      window.dispatchEvent(new CustomEvent("toggle-command"));
+      window.dispatchEvent(new CustomEvent("nav-toggle-command"));
     }
   });
 </script>

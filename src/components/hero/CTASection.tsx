@@ -28,7 +28,7 @@ export function CTASection() {
               </h2>
 
               <p className="text-muted-foreground max-w-lg mx-auto">
-                DevOS is an open-source project. Contribute your favorite tools,
+                Nav is an open-source project. Contribute your favorite tools,
                 suggest improvements, or fork it for your own workspace.
               </p>
 

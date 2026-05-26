@@ -7,7 +7,7 @@ interface Props {
 }
 
 const {
-  title = "DevOS — Developer Workspace",
+  title = "Nav — Developer Workspace",
   description = "The operating system for modern developers. Curated tools, resources, and inspiration.",
 } = Astro.props;
 
@@ -61,7 +61,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://dev-os.v
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: "DevOS",
+      name: "Nav",
       description,
       url: Astro.site || "https://dev-os.vercel.app",
     })} />

@@ -11,6 +11,8 @@ import { useBookmarks } from "@/hooks/useBookmarks";
 import type { Site, Category } from "@/types";
 
 // Shared state hook for cross-island communication
+const FILTER_EVENT = "nav-filter";
+
 function useSharedFilter() {
   const [activeCategory, setActiveCategoryState] = useState<Category | null>(null);
   const [searchQuery, setSearchQueryState] = useState("");
@@ -28,23 +30,23 @@ function useSharedFilter() {
         setBookmarkFilterState(e.detail.bookmarkFilter);
       }
     };
-    window.addEventListener("devos-filter" as any, handler);
-    return () => window.removeEventListener("devos-filter" as any, handler);
+    window.addEventListener(FILTER_EVENT as any, handler);
+    return () => window.removeEventListener(FILTER_EVENT as any, handler);
   }, []);
 
   const setActiveCategory = useCallback((category: Category | null) => {
     setActiveCategoryState(category);
-    window.dispatchEvent(new CustomEvent("devos-filter", { detail: { category } }));
+    window.dispatchEvent(new CustomEvent(FILTER_EVENT, { detail: { category } }));
   }, []);
 
   const setSearchQuery = useCallback((query: string) => {
     setSearchQueryState(query);
-    window.dispatchEvent(new CustomEvent("devos-filter", { detail: { query } }));
+    window.dispatchEvent(new CustomEvent(FILTER_EVENT, { detail: { query } }));
   }, []);
 
   const setBookmarkFilter = useCallback((enabled: boolean) => {
     setBookmarkFilterState(enabled);
-    window.dispatchEvent(new CustomEvent("devos-filter", { detail: { bookmarkFilter: enabled } }));
+    window.dispatchEvent(new CustomEvent(FILTER_EVENT, { detail: { bookmarkFilter: enabled } }));
   }, []);
 
   return { activeCategory, searchQuery, bookmarkFilter, setActiveCategory, setSearchQuery, setBookmarkFilter };
@@ -111,8 +113,8 @@ export function CommandMenuWrapper({ sites }: { sites: Site[] }) {
 
   useEffect(() => {
     const handler = () => setIsOpen((prev) => !prev);
-    window.addEventListener("toggle-command" as any, handler);
-    return () => window.removeEventListener("toggle-command" as any, handler);
+    window.addEventListener("nav-toggle-command" as any, handler);
+    return () => window.removeEventListener("nav-toggle-command" as any, handler);
   }, []);
 
   return (
@@ -136,7 +138,7 @@ export function DockMenuWrapper() {
   };
 
   const handleSearchClick = () => {
-    window.dispatchEvent(new CustomEvent("toggle-command"));
+    window.dispatchEvent(new CustomEvent("nav-toggle-command"));
   };
 
   const handleBookmarkClick = () => {

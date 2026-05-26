@@ -7,6 +7,9 @@ import { Search, Command, ExternalLink, ArrowUpRight, X } from "lucide-react";
 import type { Site, Category } from "@/types";
 import { deriveCategories } from "@/types";
 
+const RECENT_SITES_KEY = "nav-recent";
+const LEGACY_RECENT_SITES_KEY = "dev-os-recent";
+
 interface CommandMenuProps {
   sites: Site[];
   isOpen: boolean;
@@ -23,13 +26,14 @@ export function CommandMenu({ sites, isOpen, onClose, onSelectCategory }: Comman
   // Load recent sites from localStorage
   useEffect(() => {
     try {
-      const stored = localStorage.getItem("dev-os-recent");
+      const stored = localStorage.getItem(RECENT_SITES_KEY) || localStorage.getItem(LEGACY_RECENT_SITES_KEY);
       if (stored) {
         const recentIds = JSON.parse(stored) as string[];
         const recent = recentIds
           .map((id) => sites.find((s) => s.id === id))
           .filter(Boolean) as Site[];
         setRecentSites(recent.slice(0, 5));
+        localStorage.setItem(RECENT_SITES_KEY, stored);
       }
     } catch {
       // ignore
@@ -102,10 +106,10 @@ export function CommandMenu({ sites, isOpen, onClose, onSelectCategory }: Comman
   const handleSelect = useCallback(
     (site: Site) => {
       try {
-        const stored = localStorage.getItem("dev-os-recent");
+        const stored = localStorage.getItem(RECENT_SITES_KEY) || localStorage.getItem(LEGACY_RECENT_SITES_KEY);
         const recentIds = stored ? (JSON.parse(stored) as string[]) : [];
         const updated = [site.id, ...recentIds.filter((id) => id !== site.id)].slice(0, 10);
-        localStorage.setItem("dev-os-recent", JSON.stringify(updated));
+        localStorage.setItem(RECENT_SITES_KEY, JSON.stringify(updated));
       } catch {
         // ignore
       }
@@ -140,7 +144,7 @@ export function CommandMenu({ sites, isOpen, onClose, onSelectCategory }: Comman
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[100] flex items-start justify-center p-4 pt-[10vh] sm:pt-[15vh]"
+          className="fixed inset-0 z-100 flex items-start justify-center p-4 pt-[10vh] sm:pt-[15vh]"
           onClick={onClose}
         >
           {/* Backdrop */}
@@ -157,7 +161,7 @@ export function CommandMenu({ sites, isOpen, onClose, onSelectCategory }: Comman
           >
             {/* Search Input */}
             <div className="flex items-center gap-3 px-4 py-4 border-b border-border/20">
-              <Search className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+              <Search className="w-5 h-5 text-muted-foreground shrink-0" />
               <input
                 ref={inputRef}
                 type="text"
@@ -166,7 +170,7 @@ export function CommandMenu({ sites, isOpen, onClose, onSelectCategory }: Comman
                 placeholder="Search resources, tags, categories..."
                 className="flex-1 bg-transparent text-foreground placeholder-muted-foreground text-sm outline-none min-w-0"
               />
-              <div className="flex items-center gap-2 flex-shrink-0">
+              <div className="flex items-center gap-2 shrink-0">
                 {query && (
                   <button
                     onClick={() => setQuery("")}
@@ -207,7 +211,7 @@ export function CommandMenu({ sites, isOpen, onClose, onSelectCategory }: Comman
                           : "hover:bg-muted/30"
                       )}
                     >
-                      <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center text-xs font-bold text-muted-foreground border border-border/20 flex-shrink-0">
+                      <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center text-xs font-bold text-muted-foreground border border-border/20 shrink-0">
                         {site.icon ? (
                           <img
                             src={site.icon}
@@ -230,7 +234,7 @@ export function CommandMenu({ sites, isOpen, onClose, onSelectCategory }: Comman
                         </div>
                         <p className="text-xs text-muted-foreground truncate">{site.description}</p>
                       </div>
-                      <ArrowUpRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                      <ArrowUpRight className="w-4 h-4 text-muted-foreground shrink-0" />
                     </button>
                   ))}
                 </div>
@@ -249,7 +253,7 @@ export function CommandMenu({ sites, isOpen, onClose, onSelectCategory }: Comman
                         onClick={() => handleCategorySelect(cat)}
                         className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted/30 hover:text-foreground transition-colors text-left"
                       >
-                        <ExternalLink className="w-3.5 h-3.5 flex-shrink-0" />
+                        <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                         {cat}
                       </button>
                     ))}
