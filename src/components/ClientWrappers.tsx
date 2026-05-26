@@ -5,7 +5,6 @@ import { CategoryScroll } from "@/components/navigation/CategoryScroll";
 import { MasonryGrid } from "@/components/masonry/MasonryGrid";
 import { CommandMenu } from "@/components/search/CommandMenu";
 import { DockMenu } from "@/components/navigation/DockMenu";
-import { FeaturedSection } from "@/components/hero/FeaturedSection";
 import { StatsSection } from "@/components/hero/StatsSection";
 import { CTASection } from "@/components/hero/CTASection";
 import { useBookmarks } from "@/hooks/useBookmarks";
@@ -151,10 +150,6 @@ export function DockMenuWrapper() {
       isBookmarkFilter={bookmarkFilter}
     />
   );
-}
-
-export function FeaturedSectionWrapper({ sites }: { sites: Site[] }) {
-  return <FeaturedSection sites={sites} />;
 }
 
 export function StatsSectionWrapper({ sites }: { sites: Site[] }) {

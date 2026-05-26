@@ -12,7 +12,7 @@ interface DockMenuProps {
   isBookmarkFilter: boolean;
 }
 
-const dockItems = [
+const dockItems: Array<{ icon: any; label: string; action?: string; href?: string }> = [
   { icon: Home, label: "Home", action: "home" },
   { icon: Search, label: "Search", action: "search" },
   { icon: Bookmark, label: "Bookmarks", action: "bookmarks" },
@@ -61,7 +61,7 @@ function DockItem({
   onClick,
   isActive,
 }: {
-  icon: React.ElementType;
+  icon: any;
   label: string;
   onClick: () => void;
   isActive?: boolean;

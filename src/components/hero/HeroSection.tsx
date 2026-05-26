@@ -165,7 +165,7 @@ export function HeroSection() {
             delay={0.7}
             icon={<Palette className="w-5 h-5 text-blue-400" />}
             title="Design System"
-            description="Figma, Framer, shadcn/ui"
+            description="Framer, shadcn/ui"
             tags={["UI", "Motion", "Component"]}
             gradient="from-blue-500/10 to-transparent"
           />
@@ -173,7 +173,7 @@ export function HeroSection() {
             className="absolute bottom-4 left-20 w-56"
             delay={0.9}
             icon={<Globe className="w-5 h-5 text-purple-400" />}
-            title="DevOps"
+            title="Deployment"
             description="Docker, K8s, Vercel, AWS"
             tags={["Cloud", "CI/CD", "Edge"]}
             gradient="from-purple-500/10 to-transparent"

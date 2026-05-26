@@ -117,8 +117,6 @@ url: https://example.com
 category: Frontend
 tags: [react, framework]
 icon: https://example.com/icon.svg  # optional
-featured: false
-createdAt: 2024-01-01
 ---
 ```
 

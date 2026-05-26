@@ -26,5 +26,9 @@
     "rough-notation": "^0.5.1",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3"
   }
 }

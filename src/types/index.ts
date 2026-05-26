@@ -6,8 +6,6 @@ export interface Site {
   category: Category;
   tags: string[];
   icon?: string;
-  featured: boolean;
-  createdAt: Date;
 }
 
 export type Category =
@@ -15,12 +13,10 @@ export type Category =
   | 'Frontend'
   | 'Backend'
   | 'Design'
-  | 'DevOps'
-  | 'Inspiration'
-  | 'Blog'
+  | 'Deployment'
   | 'Tools'
   | 'Open Source'
-  | 'Productivity';
+  ;
 
 export interface CategoryItem {
   id: Category;
@@ -33,10 +29,7 @@ export const CATEGORIES: CategoryItem[] = [
   { id: 'Frontend', label: 'Frontend', icon: 'lucide:monitor' },
   { id: 'Backend', label: 'Backend', icon: 'lucide:server' },
   { id: 'Design', label: 'Design', icon: 'lucide:palette' },
-  { id: 'DevOps', label: 'DevOps', icon: 'lucide:cloud' },
-  { id: 'Inspiration', label: 'Inspiration', icon: 'lucide:lightbulb' },
-  { id: 'Blog', label: 'Blog', icon: 'lucide:book-open' },
+  { id: 'Deployment', label: 'Deployment', icon: 'lucide:rocket' },
   { id: 'Tools', label: 'Tools', icon: 'lucide:wrench' },
   { id: 'Open Source', label: 'Open Source', icon: 'lucide:github' },
-  { id: 'Productivity', label: 'Productivity', icon: 'lucide:zap' },
 ];

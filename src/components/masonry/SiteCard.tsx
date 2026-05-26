@@ -3,7 +3,7 @@
 import React, { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { ExternalLink, Bookmark, Star } from "lucide-react";
+import { ExternalLink, Bookmark } from "lucide-react";
 import { useBookmarks } from "@/hooks/useBookmarks";
 import type { Site } from "@/types";
 
@@ -43,12 +43,9 @@ export function SiteCard({ site, index }: SiteCardProps) {
       Frontend: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
       Backend: "bg-amber-500/10 text-amber-400 border-amber-500/20",
       Design: "bg-pink-500/10 text-pink-400 border-pink-500/20",
-      DevOps: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
-      Inspiration: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-      Blog: "bg-orange-500/10 text-orange-400 border-orange-500/20",
       Tools: "bg-neutral-500/10 text-neutral-400 border-neutral-500/20",
       "Open Source": "bg-green-500/10 text-green-400 border-green-500/20",
-      Productivity: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
+      Deployment: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
     };
     return colors[category] || colors.Tools;
   };
@@ -129,17 +126,7 @@ export function SiteCard({ site, index }: SiteCardProps) {
             </div>
           </div>
 
-          <div className="flex items-center gap-1">
-            {site.featured && (
-              <motion.div
-                initial={{ rotate: 0 }}
-                animate={{ rotate: isHovered ? 15 : 0 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-              </motion.div>
-            )}
-          </div>
+          <div className="flex items-center gap-1" />
         </div>
 
         {/* Description */}

@@ -5,7 +5,6 @@ export const GET: APIRoute = async ({ site }) => {
   const baseUrl = site?.toString() || "https://dev-os.vercel.app";
 
   const items = sites
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
     .slice(0, 30)
     .map(
       (site) => `
@@ -13,7 +12,6 @@ export const GET: APIRoute = async ({ site }) => {
       <title>${escapeXml(site.title)}</title>
       <link>${escapeXml(site.url)}</link>
       <guid>${escapeXml(site.url)}</guid>
-      <pubDate>${new Date(site.createdAt).toUTCString()}</pubDate>
       <description>${escapeXml(site.description)}</description>
       <category>${escapeXml(site.category)}</category>
     </item>`
