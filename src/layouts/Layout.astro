@@ -1,0 +1,74 @@
+---
+import "@/styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "DevOS — Developer Workspace",
+  description = "The operating system for modern developers. Curated tools, resources, and inspiration.",
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://dev-os.vercel.app");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#030303" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${Astro.site || "https://dev-os.vercel.app"}/og.png`} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${Astro.site || "https://dev-os.vercel.app"}/og.png`} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Prevent FOUC -->
+    <script is:inline>
+      (function() {
+        document.documentElement.classList.add("dark");
+        document.documentElement.style.colorScheme = "dark";
+        document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#030303");
+      })();
+    </script>
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "DevOS",
+      description,
+      url: Astro.site || "https://dev-os.vercel.app",
+    })} />
+
+    <title>{title}</title>
+  </head>
+  <body class="bg-background text-foreground antialiased noise">
+    <slot />
+  </body>
+</html>

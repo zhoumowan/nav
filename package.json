@@ -12,6 +12,19 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.3.7"
+    "@astrojs/react": "^5.0.5",
+    "@iconify/react": "^6.0.2",
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^6.3.7",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^1.16.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "rough-notation": "^0.5.1",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^4.3.0"
   }
 }

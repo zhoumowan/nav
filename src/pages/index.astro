@@ -1,17 +1,88 @@
 ---
-
+import Layout from "@/layouts/Layout.astro";
+import { HeroSection } from "@/components/hero/HeroSection";
+import { ScrollProgress } from "@/components/effects/ScrollProgress";
+import { CursorGlow } from "@/components/effects/CursorGlow";
+import {
+  CategoryScrollWrapper,
+  MasonryGridWrapper,
+  CommandMenuWrapper,
+  DockMenuWrapper,
+  StatsSectionWrapper,
+} from "@/components/ClientWrappers";
+import { PageLoader } from "@/components/effects/PageLoader";
+import { sites } from "@/data/sites";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+  title="DevOS — Build Your Digital Universe"
+  description="The operating system for modern developers. Curated tools, resources, and inspiration for the AI era."
+>
+  <PageLoader client:load />
+  <main class="relative">
+    <CursorGlow client:load />
+    <ScrollProgress client:load />
+
+    <!-- Hero -->
+    <HeroSection client:load />
+
+    <!-- Stats + CTA -->
+    <StatsSectionWrapper sites={sites} client:load />
+
+    <!-- Resources Section -->
+    <section id="resources" class="relative py-24 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+            <span class="text-gradient">Curated Resources</span>
+          </h2>
+          <p class="text-neutral-500 max-w-md mx-auto">
+            Hand-picked tools and resources for modern development workflows
+          </p>
+        </div>
+
+        <CategoryScrollWrapper sites={sites} client:load />
+
+        <div class="mt-8">
+          <MasonryGridWrapper sites={sites} client:load />
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative py-16 px-6 border-t border-border/20">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center">
+            <span class="text-background font-bold text-sm">D</span>
+          </div>
+          <span class="font-semibold text-foreground">DevOS</span>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Built for developers, by developers. Open source on GitHub.
+        </p>
+        <div class="flex items-center gap-4 text-sm text-muted-foreground">
+          <a href="#" class="hover:text-foreground transition-colors">About</a>
+          <a href="#" class="hover:text-foreground transition-colors">Submit</a>
+          <a href="/rss.xml" class="hover:text-foreground transition-colors">RSS</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Command Menu -->
+    <CommandMenuWrapper sites={sites} client:load />
+
+    <!-- Dock -->
+    <DockMenuWrapper client:load />
+  </main>
+</Layout>
+
+<script>
+  // Command+K handler
+  document.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+      e.preventDefault();
+      window.dispatchEvent(new CustomEvent("toggle-command"));
+    }
+  });
+</script>
