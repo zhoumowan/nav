@@ -1,3 +1,5 @@
+export type Category = string;
+
 export interface Site {
   id: string;
   title: string;
@@ -7,16 +9,6 @@ export interface Site {
   tags: string[];
   icon?: string;
 }
-
-export type Category =
-  | 'AI'
-  | 'Frontend'
-  | 'Backend'
-  | 'Design'
-  | 'Deployment'
-  | 'Tools'
-  | 'Open Source'
-  ;
 
 export interface CategoryItem {
   id: Category;
@@ -33,3 +25,30 @@ export const CATEGORIES: CategoryItem[] = [
   { id: 'Tools', label: 'Tools', icon: 'lucide:wrench' },
   { id: 'Open Source', label: 'Open Source', icon: 'lucide:github' },
 ];
+
+// Make categories flexible: use string-based categories and derive a category list from sites.
+
+export const KNOWN_CATEGORY_ICONS: Record<string, string> = {
+  AI: 'lucide:sparkles',
+  Frontend: 'lucide:monitor',
+  Backend: 'lucide:server',
+  Design: 'lucide:palette',
+  Deployment: 'lucide:rocket',
+  Tools: 'lucide:wrench',
+  'Open Source': 'lucide:github',
+};
+
+export function deriveCategories(sites: Site[]): CategoryItem[] {
+  const map = new Map<string, CategoryItem>();
+  sites.forEach((s) => {
+    const key = s.category || 'Tools';
+    if (!map.has(key)) {
+      map.set(key, {
+        id: key,
+        label: key,
+        icon: KNOWN_CATEGORY_ICONS[key] || 'lucide:tag',
+      });
+    }
+  });
+  return Array.from(map.values()).sort((a, b) => a.label.localeCompare(b.label));
+}

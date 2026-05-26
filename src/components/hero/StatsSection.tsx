@@ -6,7 +6,7 @@ import { SectionReveal } from "@/components/effects/SectionReveal";
 import { NumberTicker } from "@/components/effects/NumberTicker";
 import { ArrowRight, Code2, Sparkles } from "lucide-react";
 import type { Site } from "@/types";
-import { CATEGORIES } from "@/types";
+import { deriveCategories } from "@/types";
 
 interface StatsSectionProps {
   sites: Site[];
@@ -14,7 +14,7 @@ interface StatsSectionProps {
 
 export function StatsSection({ sites }: StatsSectionProps) {
   const totalSites = sites.length;
-  const totalCategories = CATEGORIES.length;
+  const totalCategories = deriveCategories(sites).length;
   const totalTags = new Set(sites.flatMap((s) => s.tags)).size;
 
   const stats: Array<{ label: string; value: number; suffix?: string }> = [

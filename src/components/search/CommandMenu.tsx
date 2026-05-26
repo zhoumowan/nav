@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Search, Command, ExternalLink, ArrowUpRight, X } from "lucide-react";
 import type { Site, Category } from "@/types";
-import { CATEGORIES } from "@/types";
+import { deriveCategories } from "@/types";
 
 interface CommandMenuProps {
   sites: Site[];
@@ -49,8 +49,8 @@ export function CommandMenu({ sites, isOpen, onClose, onSelectCategory }: Comman
   }, [sites, query]);
 
   const categories = React.useMemo(() => {
-    return CATEGORIES.map((c) => c.id);
-  }, []);
+    return deriveCategories(sites).map((c) => c.id);
+  }, [sites]);
 
   const results = query.trim() ? filteredSites : recentSites;
 

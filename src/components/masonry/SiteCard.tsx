@@ -68,7 +68,10 @@ export function SiteCard({ site, index }: SiteCardProps) {
         "group relative rounded-xl border border-border/40 bg-card/40",
         "hover:border-primary/20",
         "transition-all duration-300 ease-out",
-        "overflow-hidden"
+        "overflow-hidden",
+        "flex flex-col h-full",
+          "h-48",
+          "box-border"
       )}
       style={{
         boxShadow: isHovered
@@ -88,7 +91,7 @@ export function SiteCard({ site, index }: SiteCardProps) {
         }}
       />
 
-      <div className="relative p-5 space-y-4">
+      <div className="relative p-5 flex flex-col h-full justify-between gap-5">
         {/* Header */}
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
@@ -126,65 +129,65 @@ export function SiteCard({ site, index }: SiteCardProps) {
             </div>
           </div>
 
-          <div className="flex items-center gap-1" />
-        </div>
-
-        {/* Description */}
-        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 group-hover:text-foreground/80 transition-colors">
-          {site.description}
-        </p>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5">
-          {site.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className="px-2 py-0.5 text-[10px] rounded-md bg-muted/60 text-muted-foreground border border-border/20 group-hover:bg-muted/80 transition-colors"
+          <div className="flex items-center gap-2">
+            <motion.button
+              onClick={(e) => {
+                e.preventDefault();
+                toggleBookmark(site.id);
+              }}
+              className={cn(
+                "p-1.5 rounded-lg transition-colors",
+                bookmarked
+                  ? "text-blue-400 bg-blue-500/10"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              )}
+              whileTap={{ scale: 0.9 }}
             >
-              {tag}
-            </span>
-          ))}
+              <Bookmark className={cn("w-3.5 h-3.5", bookmarked && "fill-current")} />
+            </motion.button>
+
+            <motion.a
+              href={site.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg",
+                "text-xs font-medium text-muted-foreground",
+                "bg-muted/50 border border-border/20",
+                "hover:bg-muted hover:text-foreground hover:border-border/40",
+                "transition-all duration-200"
+              )}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Visit
+              <ExternalLink className="w-3 h-3" />
+            </motion.a>
+          </div>
         </div>
 
-        {/* Actions */}
-        <div className="flex items-center justify-between pt-2">
-          <motion.button
-            onClick={(e) => {
-              e.preventDefault();
-              toggleBookmark(site.id);
-            }}
-            className={cn(
-              "p-1.5 rounded-lg transition-colors",
-              bookmarked
-                ? "text-blue-400 bg-blue-500/10"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-            )}
-            whileTap={{ scale: 0.9 }}
-          >
-            <Bookmark
-              className={cn("w-3.5 h-3.5", bookmarked && "fill-current")}
-            />
-          </motion.button>
+        <div className="flex-1 flex flex-col justify-start gap-2 min-h-0">
+          {/* Description */}
+          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 group-hover:text-foreground/80 transition-colors max-h-[3rem] overflow-hidden">
+            {site.description}
+          </p>
 
-          <motion.a
-            href={site.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg",
-              "text-xs font-medium text-muted-foreground",
-              "bg-muted/50 border border-border/20",
-              "hover:bg-muted hover:text-foreground hover:border-border/40",
-              "transition-all duration-200"
-            )}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            Visit
-            <ExternalLink className="w-3 h-3" />
-          </motion.a>
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1.5 mt-2">
+            {site.tags.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="px-2 py-0.5 text-[10px] rounded-md bg-muted/60 text-muted-foreground border border-border/20 group-hover:bg-muted/80 transition-colors"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
+
       </div>
+
+        {/* Actions moved to header for cleaner layout */}
     </motion.div>
   );
 }

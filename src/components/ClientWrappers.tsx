@@ -87,6 +87,7 @@ export function CategoryScrollWrapper({ sites }: { sites: Site[] }) {
     <CategoryScroll
       activeCategory={activeCategory}
       onCategoryChange={setActiveCategory}
+      sites={sites}
     />
   );
 }

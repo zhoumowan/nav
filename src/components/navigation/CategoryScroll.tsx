@@ -3,20 +3,21 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { CATEGORIES, type Category } from "@/types";
+import { deriveCategories, type CategoryItem, type Category, type Site } from "@/types";
 import { Icon } from "@iconify/react";
 import { Marquee } from "@/components/effects/Marquee";
 
 interface CategoryScrollProps {
   activeCategory: Category | null;
   onCategoryChange: (category: Category | null) => void;
+  sites: Site[];
 }
 
-export function CategoryScroll({ activeCategory, onCategoryChange }: CategoryScrollProps) {
+export function CategoryScroll({ activeCategory, onCategoryChange, sites }: CategoryScrollProps) {
   return (
     <div className="relative w-full">
       <Marquee speed={40} pauseOnHover fade fadeWidth={60}>
-        {CATEGORIES.map((cat) => {
+        {deriveCategories(sites).map((cat) => {
           const isActive = activeCategory === cat.id;
           return (
             <CategoryPill
@@ -39,7 +40,7 @@ function CategoryPill({
   isActive,
   onClick,
 }: {
-  cat: { id: Category; label: string; icon: string };
+  cat: CategoryItem;
   isActive: boolean;
   onClick: () => void;
 }) {
