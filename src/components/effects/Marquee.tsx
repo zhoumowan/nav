@@ -1,6 +1,14 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useCallback, Children, cloneElement } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useCallback,
+  Children,
+  cloneElement,
+} from "react";
 import { cn } from "@/lib/utils";
 
 interface MarqueeProps {
@@ -23,6 +31,7 @@ export function Marquee({
   fadeWidth = 60,
 }: MarqueeProps) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const measureRef = useRef<HTMLDivElement>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const animationRef = useRef<number>();
@@ -31,23 +40,37 @@ export function Marquee({
   const scrollLeftRef = useRef(0);
   const [contentWidth, setContentWidth] = useState(0);
 
-  // Clone children with unique keys for the duplicated set
   const originalItems = Children.toArray(children);
-  const clonedItems = originalItems.map((child, i) => {
-    if (React.isValidElement(child)) {
-      return cloneElement(child, {
-        ...child.props,
-        key: `marquee-clone-${i}`,
-      });
-    }
-    return child;
-  });
 
-  // Measure half-width of duplicated content
-  useEffect(() => {
-    if (trackRef.current) {
-      setContentWidth(trackRef.current.scrollWidth / 2);
-    }
+  const renderItems = useCallback(
+    (copyIndex: number) =>
+      originalItems.map((child, itemIndex) => {
+        if (React.isValidElement(child)) {
+          return cloneElement(child, {
+            ...child.props,
+            key: `marquee-${copyIndex}-${itemIndex}`,
+          });
+        }
+
+        return <React.Fragment key={`marquee-${copyIndex}-${itemIndex}`}>{child}</React.Fragment>;
+      }),
+    [originalItems]
+  );
+
+  // Measure one group so the wrap point aligns with the real content seam.
+  useLayoutEffect(() => {
+    if (!measureRef.current) return;
+
+    const updateWidth = () => {
+      setContentWidth(measureRef.current?.scrollWidth ?? 0);
+    };
+
+    updateWidth();
+
+    const resizeObserver = new ResizeObserver(updateWidth);
+    resizeObserver.observe(measureRef.current);
+
+    return () => resizeObserver.disconnect();
   }, [children]);
 
   // Auto-scroll animation loop
@@ -185,13 +208,16 @@ export function Marquee({
       >
         <div
           ref={trackRef}
-          className="flex flex-shrink-0 will-change-transform gap-3"
+          className="flex shrink-0 will-change-transform gap-3"
           style={{
             width: "max-content",
           }}
         >
-          {originalItems}
-          {clonedItems}
+          <div ref={measureRef} className="flex shrink-0 gap-3">
+            {renderItems(0)}
+          </div>
+          <div className="flex shrink-0 gap-3">{renderItems(1)}</div>
+          <div className="flex shrink-0 gap-3">{renderItems(2)}</div>
         </div>
       </div>
     </div>

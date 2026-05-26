@@ -128,12 +128,20 @@ export function CommandMenuWrapper({ sites }: { sites: Site[] }) {
 export function DockMenuWrapper() {
   const { activeCategory, bookmarkFilter, setActiveCategory, setBookmarkFilter, setSearchQuery } = useSharedFilter();
 
+  const scrollToResources = () => {
+    const section = document.getElementById("resources");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   const handleSearchClick = () => {
     window.dispatchEvent(new CustomEvent("toggle-command"));
   };
 
   const handleBookmarkClick = () => {
     setBookmarkFilter(!bookmarkFilter);
+    window.requestAnimationFrame(scrollToResources);
   };
 
   const handleHomeClick = () => {

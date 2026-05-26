@@ -25,9 +25,9 @@ export function DockMenu({ onSearchClick, onBookmarkClick, onHomeClick, isBookma
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] sm:w-auto max-w-[90vw]"
+      className="fixed right-4 top-1/2 -translate-y-1/2 sm:right-6 z-50"
     >
-      <div className="flex items-center justify-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-2 rounded-2xl glass-elevated shadow-2xl overflow-x-auto scrollbar-hide">
+      <div className="flex flex-col items-center justify-center gap-1 px-2 py-2 rounded-2xl glass-elevated shadow-2xl overflow-y-auto scrollbar-hide">
         {dockItems.map((item) => (
           <DockItem
             key={item.label}
@@ -79,7 +79,7 @@ function DockItem({
       whileTap={{ scale: 0.95 }}
     >
       <Icon className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
-      <span className="absolute -top-9 left-1/2 -translate-x-1/2 px-2 py-1 rounded-md bg-card text-[10px] text-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-border/20 pointer-events-none hidden sm:block">
+      <span className="absolute left-auto right-12 top-1/2 -translate-y-1/2 px-2 py-1 rounded-md bg-card text-[10px] text-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-border/20 pointer-events-none hidden sm:block">
         {label}
       </span>
     </motion.button>

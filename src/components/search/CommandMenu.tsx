@@ -123,6 +123,15 @@ export function CommandMenu({ sites, isOpen, onClose, onSelectCategory }: Comman
     [onSelectCategory, onClose]
   );
 
+  const getInitials = (title: string) => {
+    return title
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase();
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -199,7 +208,16 @@ export function CommandMenu({ sites, isOpen, onClose, onSelectCategory }: Comman
                       )}
                     >
                       <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center text-xs font-bold text-muted-foreground border border-border/20 flex-shrink-0">
-                        {site.title.slice(0, 2).toUpperCase()}
+                        {site.icon ? (
+                          <img
+                            src={site.icon}
+                            alt={site.title}
+                            className="w-6 h-6 object-contain"
+                            loading="lazy"
+                          />
+                        ) : (
+                          getInitials(site.title)
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
